@@ -2,6 +2,12 @@
 
 Flask-based QR code generator with multi-language support (nl, en, fr, de).
 
+## Current versions
+
+| Component | Version |
+|-----------|---------|
+| Python | PYTHON_VERSION_PLACEHOLDER |
+
 ## Supported QR types
 
 - **URL** — Any web URL

@@ -2,9 +2,14 @@
 
 Flask-based QR code generator with multi-language support, based on `python:3.13-slim`.
 
+## Current versions
+
+| Component | Version |
+|-----------|---------|
+| Python | PYTHON_VERSION_PLACEHOLDER |
+
 ## What's inside
 
-- Python 3.13
 - Flask + Flask-Babel (i18n: nl, en, fr, de)
 - qrcode[pil]
 
