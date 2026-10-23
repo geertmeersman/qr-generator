@@ -74,3 +74,7 @@ Open `http://localhost:5000` in your browser.
 ## Auto-updates
 
 The image is automatically rebuilt and pushed to Docker Hub whenever the upstream `python:3.13-slim` image is updated (checked daily).
+
+---
+
+© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](LICENSE)

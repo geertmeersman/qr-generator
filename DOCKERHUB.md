@@ -46,3 +46,7 @@ Open `http://localhost:5000` in your browser.
 ## Auto-updates
 
 Rebuilt automatically whenever the upstream `python:3.13-slim` image is updated.
+
+---
+
+© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](https://github.com/geertmeersman/qr-generator/blob/main/LICENSE)
