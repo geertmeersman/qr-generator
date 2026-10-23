@@ -51,20 +51,6 @@ services:
 
 Open `http://localhost:5000` in your browser.
 
-## CI/CD
-
-| Workflow | Trigger | Description |
-|----------|---------|-------------|
-| `pr-validate` | Pull request | Hadolint lint + build check |
-| `docker-publish` | Daily / manual | Upstream digest check, Trivy scan, multi-platform build & push |
-
 ## Auto-updates
 
 The image is automatically rebuilt and pushed to Docker Hub whenever the upstream `python:3.13-slim` image is updated (checked daily).
-
-## Secrets required
-
-| Secret | Description |
-|--------|-------------|
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Docker Hub access token |
