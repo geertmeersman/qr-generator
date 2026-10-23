@@ -2,6 +2,8 @@
 
 Flask-based QR code generator with multi-language support, based on `python:3.13-slim`.
 
+![screenshot](images/screenshot.png)
+
 ## Current versions
 
 | Component | Version |
