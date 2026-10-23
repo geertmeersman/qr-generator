@@ -1,0 +1,16 @@
+services:
+  qr-web:
+    build: .
+    container_name: qr-web
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - websites
+
+networks:
+  websites:
+    external: true

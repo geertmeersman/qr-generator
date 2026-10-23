@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ _("QR Generator") }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white flex flex-col items-center py-12 px-4">
+
+  <div class="w-full max-w-2xl">
+
+    <!-- Language switcher -->
+    <div class="flex justify-end mb-6">
+      <select onchange="window.location='/lang/'+this.value"
+        class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
+        {% for code, flag, label in [("nl","🇧🇪","Nederlands"), ("en","🇬🇧","English"), ("fr","🇫🇷","Français"), ("de","🇩🇪","Deutsch")] %}
+        <option value="{{ code }}" {% if get_locale() == code %}selected{% endif %}>{{ flag }} {{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <h1 class="text-4xl font-bold text-center mb-2 tracking-tight">{{ _("QR Generator") }}</h1>
+    <p class="text-slate-400 text-center mb-8">{{ _("Generate QR codes for different purposes") }}</p>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 mb-6 justify-center">
+      {% set tabs = [
+        ("url",   "🔗", _("Link")),
+        ("sepa",  "🏦", _("SEPA")),
+        ("wifi",  "📶", _("WiFi")),
+        ("vcard", "👤", _("vCard")),
+        ("text",  "📝", _("Text")),
+      ] %}
+      {% for id, icon, label in tabs %}
+      <button onclick="switchTab('{{ id }}')"
+        id="tab-{{ id }}"
+        class="tab-btn px-4 py-2 rounded-full text-sm font-medium transition-all
+               {% if id == 'url' %}bg-indigo-600 text-white{% else %}bg-slate-700 text-slate-300 hover:bg-slate-600{% endif %}">
+        {{ icon }} {{ label }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Card -->
+    <div class="bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-700">
+
+      <!-- URL -->
+      <div id="form-url" class="tab-form space-y-4">
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">URL</label>
+          <input id="url-url" type="url" placeholder="https://example.com"
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+      </div>
+
+      <!-- SEPA -->
+      <div id="form-sepa" class="tab-form space-y-4 hidden">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Recipient name") }}</label>
+            <input id="sepa-naam" type="text" placeholder="{{ _('Jan Janssen') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">IBAN</label>
+            <input id="sepa-iban" type="text" placeholder="BE86 7340 4362 5050"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Amount (EUR)") }}</label>
+            <input id="sepa-bedrag" type="number" step="0.01" min="0" placeholder="0.00"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">BIC ({{ _("optional") }})</label>
+            <input id="sepa-bic" type="text" placeholder="KREDBEBB"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Message") }}</label>
+            <input id="sepa-mededeling" type="text" placeholder="{{ _('Invoice 2024-001') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- WiFi -->
+      <div id="form-wifi" class="tab-form space-y-4 hidden">
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">{{ _("Network name (SSID)") }}</label>
+          <input id="wifi-ssid" type="text" placeholder="{{ _('MyWifi') }}"
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">{{ _("Password") }}</label>
+          <input id="wifi-password" type="text" placeholder="{{ _('password') }}"
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div class="flex gap-4 items-center">
+          <div class="flex-1">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Security") }}</label>
+            <select id="wifi-security"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">{{ _("None") }}</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-2 mt-5">
+            <input id="wifi-hidden" type="checkbox" class="w-4 h-4 accent-indigo-500" />
+            <label class="text-sm text-slate-400">{{ _("Hidden network") }}</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- vCard -->
+      <div id="form-vcard" class="tab-form space-y-4 hidden">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Name") }}</label>
+            <input id="vcard-naam" type="text" placeholder="{{ _('Jan Janssen') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Phone") }}</label>
+            <input id="vcard-tel" type="tel" placeholder="+32 499 00 00 00"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Email") }}</label>
+            <input id="vcard-email" type="email" placeholder="jan@example.com"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Website") }}</label>
+            <input id="vcard-url" type="url" placeholder="https://example.com"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div id="form-text" class="tab-form space-y-4 hidden">
+        <div>
+          <label class="block text-sm text-slate-400 mb-1">{{ _("Text") }}</label>
+          <textarea id="text-text" rows="4" placeholder="{{ _('Free text...') }}"
+            class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea>
+        </div>
+      </div>
+
+      <button onclick="generate()"
+        class="mt-6 w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 transition-colors rounded-xl py-3 font-semibold text-lg">
+        {{ _("Generate QR code") }}
+      </button>
+    </div>
+
+    <!-- Result -->
+    <div id="result" class="hidden mt-8 bg-slate-800 rounded-2xl shadow-xl p-6 border border-slate-700 text-center">
+      <img id="qr-img" src="" alt="QR code" class="mx-auto rounded-xl w-64 h-64 object-contain bg-white p-2" />
+      <div class="mt-4 flex gap-3 justify-center">
+        <a id="download-btn" href="#" download="qrcode.png"
+          class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-sm font-medium transition-colors">
+          ⬇ {{ _("Download PNG") }}
+        </a>
+        <button onclick="copyImage()"
+          class="px-5 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium transition-colors">
+          📋 {{ _("Copy") }}
+        </button>
+      </div>
+      <details class="mt-4 text-left">
+        <summary class="text-xs text-slate-500 cursor-pointer hover:text-slate-400">{{ _("Show payload") }}</summary>
+        <pre id="payload-text" class="mt-2 text-xs text-slate-400 bg-slate-900 rounded-lg p-3 overflow-x-auto whitespace-pre-wrap break-all"></pre>
+      </details>
+    </div>
+
+    <p id="error-msg" class="hidden mt-4 text-center text-red-400 text-sm"></p>
+  </div>
+
+  <footer class="mt-12 text-center text-slate-600 text-xs">
+    &copy; {{ now.year }} Geert Meersman
+  </footer>
+
+  <script>
+    let activeTab = 'url';
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-form').forEach(f => f.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-slate-700', 'text-slate-300');
+      });
+      document.getElementById('form-' + tab).classList.remove('hidden');
+      const btn = document.getElementById('tab-' + tab);
+      btn.classList.add('bg-indigo-600', 'text-white');
+      btn.classList.remove('bg-slate-700', 'text-slate-300');
+      activeTab = tab;
+      document.getElementById('result').classList.add('hidden');
+      document.getElementById('error-msg').classList.add('hidden');
+    }
+
+    function getPayload() {
+      if (activeTab === 'url')   return { type: 'url',   url: document.getElementById('url-url').value };
+      if (activeTab === 'sepa')  return { type: 'sepa',  naam: document.getElementById('sepa-naam').value, iban: document.getElementById('sepa-iban').value, bedrag: document.getElementById('sepa-bedrag').value, bic: document.getElementById('sepa-bic').value, mededeling: document.getElementById('sepa-mededeling').value };
+      if (activeTab === 'wifi')  return { type: 'wifi',  ssid: document.getElementById('wifi-ssid').value, password: document.getElementById('wifi-password').value, security: document.getElementById('wifi-security').value, hidden: document.getElementById('wifi-hidden').checked };
+      if (activeTab === 'vcard') return { type: 'vcard', naam: document.getElementById('vcard-naam').value, tel: document.getElementById('vcard-tel').value, email: document.getElementById('vcard-email').value, url: document.getElementById('vcard-url').value };
+      if (activeTab === 'text')  return { type: 'text',  text: document.getElementById('text-text').value };
+    }
+
+    async function generate() {
+      document.getElementById('error-msg').classList.add('hidden');
+      const res = await fetch('/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(getPayload()) });
+      const json = await res.json();
+      if (json.error) {
+        document.getElementById('error-msg').textContent = json.error;
+        document.getElementById('error-msg').classList.remove('hidden');
+        return;
+      }
+      const src = 'data:image/png;base64,' + json.image;
+      document.getElementById('qr-img').src = src;
+      document.getElementById('download-btn').href = src;
+      document.getElementById('payload-text').textContent = json.payload;
+      document.getElementById('result').classList.remove('hidden');
+    }
+
+    async function copyImage() {
+      const img = document.getElementById('qr-img');
+      const res = await fetch(img.src);
+      const blob = await res.blob();
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    }
+  </script>
+</body>
+</html>

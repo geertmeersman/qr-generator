@@ -1,0 +1,82 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "QR Generator"
+msgstr "QR Generator"
+
+msgid "Generate QR codes for different purposes"
+msgstr "Genereer QR-codes voor verschillende doeleinden"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Recipient name"
+msgstr "Naam ontvanger"
+
+msgid "Amount (EUR)"
+msgstr "Bedrag (EUR)"
+
+msgid "optional"
+msgstr "optioneel"
+
+msgid "Message"
+msgstr "Mededeling"
+
+msgid "Invoice 2024-001"
+msgstr "Factuur 2024-001"
+
+msgid "Network name (SSID)"
+msgstr "Netwerknaam (SSID)"
+
+msgid "MyWifi"
+msgstr "MijnWifi"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "password"
+msgstr "wachtwoord"
+
+msgid "Security"
+msgstr "Beveiliging"
+
+msgid "None"
+msgstr "Geen"
+
+msgid "Hidden network"
+msgstr "Verborgen netwerk"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Jan Janssen"
+msgstr "Jan Janssen"
+
+msgid "Phone"
+msgstr "Telefoon"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Free text..."
+msgstr "Vrije tekst..."
+
+msgid "Generate QR code"
+msgstr "Genereer QR-code"
+
+msgid "Download PNG"
+msgstr "Download PNG"
+
+msgid "Copy"
+msgstr "Kopiëren"
+
+msgid "Show payload"
+msgstr "Toon inhoud"
