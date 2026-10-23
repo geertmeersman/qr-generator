@@ -1,5 +1,7 @@
 # qr-generator
 
+![screenshot](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot.png)
+
 Flask-based QR code generator with multi-language support (nl, en, fr, de).
 
 ## Current versions
