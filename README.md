@@ -28,8 +28,25 @@ Flask-based QR code generator with multi-language support, based on `python:3.13
 ## Usage
 
 ```bash
-docker pull <your-dockerhub-username>/qr-generator:latest
-docker run -p 5000:5000 <your-dockerhub-username>/qr-generator:latest
+docker pull geertmeersman/qr-generator:latest
+docker run -p 5000:5000 geertmeersman/qr-generator:latest
+```
+
+Or with Docker Compose:
+
+```yaml
+services:
+  qr-web:
+    image: geertmeersman/qr-generator:latest
+    container_name: qr-web
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
 ```
 
 Open `http://localhost:5000` in your browser.
