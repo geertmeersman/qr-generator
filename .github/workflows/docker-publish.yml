@@ -120,14 +120,22 @@ jobs:
           git add Dockerfile README.md DOCKERHUB.md
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
           git commit -m "fix: pin python:3.13-slim to ${{ steps.upstream.outputs.version }} (${{ steps.upstream.outputs.digest }})"
-          git push origin "${BRANCH}"
-          curl -s -X POST \
+          git push --force origin "${BRANCH}"
+          # Create PR only if it doesn't exist yet
+          EXISTING=$(curl -s \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls" \
-            -d "{
-              \"title\": \"fix: pin python:3.13-slim to ${{ steps.upstream.outputs.version }}\",
-              \"body\": \"Automated base image update.\n\n- New digest: \`${{ steps.upstream.outputs.digest }}\`\n- Python version: \`${{ steps.versions.outputs.python }}\`\",
-              \"head\": \"${BRANCH}\",
-              \"base\": \"main\"
-            }"
+            "https://api.github.com/repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:${BRANCH}&state=open" \
+            | jq 'length')
+          if [[ "${EXISTING}" == "0" ]]; then
+            curl -s -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls" \
+              -d "{
+                \"title\": \"fix: pin python:3.13-slim to ${{ steps.upstream.outputs.version }}\",
+                \"body\": \"Automated base image update.\n\n- New digest: \`${{ steps.upstream.outputs.digest }}\`\n- Python version: \`${{ steps.versions.outputs.python }}\`\",
+                \"head\": \"${BRANCH}\",
+                \"base\": \"main\"
+              }"
+          fi
