@@ -21,11 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Fill version placeholder
+        run: |
+          VERSION=$(grep "^# python:3.13-slim" Dockerfile | awk '{print $3}')
+          sed "s|PYTHON_VERSION_PLACEHOLDER|${VERSION}|" DOCKERHUB.md > DOCKERHUB.tmp.md
+
       - name: Update Docker Hub description
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: geertmeersman/qr-generator
-          readme-filepath: ./DOCKERHUB.md
+          readme-filepath: ./DOCKERHUB.tmp.md
           enable-url-completion: true
