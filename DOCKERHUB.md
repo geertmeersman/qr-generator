@@ -1,4 +1,17 @@
-# qr-generator
+<p align="center">
+  <a href="https://github.com/geertmeersman"><img src="https://img.shields.io/badge/maintainer-Geert%20Meersman-green?style=for-the-badge&logo=github"></a>
+  <a href="https://www.buymeacoffee.com/geertmeersman"><img src="https://img.shields.io/badge/Buy%20me%20an%20Omer-donate-yellow?style=for-the-badge&logo=buymeacoffee"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/geertmeersman/qr-generator/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+  <a href="https://github.com/geertmeersman/qr-generator/releases"><img src="https://img.shields.io/github/v/release/geertmeersman/qr-generator?logo=github"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/docker/pulls/geertmeersman/qr-generator">
+  <img src="https://img.shields.io/docker/v/geertmeersman/qr-generator?label=docker%20image%20version">
+</p>
 
 ![screenshot](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot.png)
 
@@ -49,4 +62,4 @@ Rebuilt automatically whenever the upstream `python:3.13-slim` image is updated.
 
 ---
 
-© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](https://github.com/geertmeersman/qr-generator/blob/main/LICENSE)
+© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](https://github.com/geertmeersman/qr-generator/blob/main/LICENSE) — [Releases](https://github.com/geertmeersman/qr-generator/releases)

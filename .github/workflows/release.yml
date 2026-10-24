@@ -1,0 +1,91 @@
+name: Release 🚀
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔢 Calculate next semantic version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          patchAll: true
+          fallbackTag: v0.0.0
+          noVersionBumpBehavior: patch
+
+      - name: 🧾 Display version info
+        run: |
+          echo "Current version: ${{ steps.semver.outputs.current }}"
+          echo "Next version: ${{ steps.semver.outputs.next }}"
+
+      - name: 🗑 Delete drafts
+        uses: hugo19941994/delete-draft-releases@v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚮 Remove pre-releases
+        run: |
+          gh release list --json tagName,isPrerelease -q '.[] | select(.isPrerelease == true) | .tagName' | while read -r tag_name; do
+            gh release delete "$tag_name" --yes
+            git push origin --delete "$tag_name" || true
+            git tag -d "$tag_name" || true
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update VERSION file
+        run: echo "${{ steps.semver.outputs.next }}" > VERSION
+
+      - name: Publish release
+        uses: release-drafter/release-drafter@v6
+        id: release_published
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          publish: true
+          tag: ${{ steps.semver.outputs.next }}
+          name: ${{ steps.semver.outputs.next }}
+
+      - name: Commit VERSION file
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "chore: bump version to ${{ steps.semver.outputs.next }}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            geertmeersman/qr-generator:latest
+            geertmeersman/qr-generator:${{ steps.semver.outputs.next }}
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: geertmeersman/qr-generator
+          readme-filepath: ./DOCKERHUB.md

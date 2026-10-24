@@ -1,8 +1,9 @@
 from datetime import datetime
 import io
 import base64
+from pathlib import Path
 import qrcode
-from flask import Flask, render_template, request, jsonify, session, redirect, make_response
+from flask import Flask, render_template, request, jsonify, redirect, make_response
 from flask_babel import Babel, gettext as _
 
 app = Flask(__name__)
@@ -18,6 +19,15 @@ def get_locale():
 babel = Babel(app, locale_selector=get_locale)
 app.jinja_env.globals["get_locale"] = get_locale
 app.jinja_env.globals["now"] = datetime.now()
+
+
+@app.context_processor
+def inject_globals():
+    try:
+        version = Path("VERSION").read_text().strip()
+    except OSError:
+        version = "dev"
+    return {"now": datetime.now(), "version": version}
 
 
 @app.route("/lang/<lang>")

@@ -116,8 +116,8 @@ jobs:
           git checkout -b "${BRANCH}"
           sed -i "s|^# python:3.13-slim .*|# python:3.13-slim ${{ steps.upstream.outputs.version }}|" Dockerfile
           sed -i "s|^FROM python:3.13-slim@.*|FROM python:3.13-slim@${{ steps.upstream.outputs.digest }}|" Dockerfile
-          sed -i "/| Python |/s/| [^ ]* |$/| ${{ steps.versions.outputs.python }} |/" README.md
-          git add Dockerfile README.md
+          sed -i "/| Python |/s/| [^ ]* |$/| ${{ steps.versions.outputs.python }} |/" README.md DOCKERHUB.md
+          git add Dockerfile README.md DOCKERHUB.md
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
           git commit -m "fix: pin python:3.13-slim to ${{ steps.upstream.outputs.version }} (${{ steps.upstream.outputs.digest }})"
           git push origin "${BRANCH}"
@@ -131,17 +131,3 @@ jobs:
               \"head\": \"${BRANCH}\",
               \"base\": \"main\"
             }"
-
-      - name: Update Docker Hub description
-        if: steps.compare.outputs.changed == 'true'
-        run: |
-          cp DOCKERHUB.md DOCKERHUB.tmp.md
-          sed -i "s|PYTHON_VERSION_PLACEHOLDER|${{ steps.versions.outputs.python }}|" DOCKERHUB.tmp.md
-
-      - uses: peter-evans/dockerhub-description@v4
-        if: steps.compare.outputs.changed == 'true'
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/qr-generator
-          readme-filepath: ./DOCKERHUB.tmp.md
