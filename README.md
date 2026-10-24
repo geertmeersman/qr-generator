@@ -12,11 +12,18 @@
 <p align="center">
   <a href="https://github.com/geertmeersman/qr-generator/actions/workflows/docker-publish.yml"><img src="https://github.com/geertmeersman/qr-generator/actions/workflows/docker-publish.yml/badge.svg" alt="Docker Publish"></a>
   <a href="https://github.com/geertmeersman/qr-generator/actions/workflows/pr-validate.yml"><img src="https://github.com/geertmeersman/qr-generator/actions/workflows/pr-validate.yml/badge.svg" alt="PR Validate"></a>
+  <a href="https://github.com/geertmeersman/qr-generator/actions/workflows/release.yml"><img src="https://github.com/geertmeersman/qr-generator/actions/workflows/release.yml/badge.svg" alt="Release 🚀"></a>
 </p>
 
 <p align="center">
   <a href="https://github.com/geertmeersman/qr-generator/issues"><img src="https://img.shields.io/github/issues/geertmeersman/qr-generator"></a>
   <a href="https://github.com/geertmeersman/qr-generator/pulls"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg"></a>
+  <a href="https://github.com/geertmeersman/qr-generator/commits/main"><img src="https://img.shields.io/github/commit-activity/y/geertmeersman/qr-generator?logo=github"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/geertmeersman/qr-generator/releases"><img src="https://img.shields.io/github/v/release/geertmeersman/qr-generator?logo=github"></a>
+  <a href="https://github.com/geertmeersman/qr-generator/releases"><img src="https://img.shields.io/github/release-date/geertmeersman/qr-generator"></a>
   <a href="https://github.com/geertmeersman/qr-generator/commits/main"><img src="https://img.shields.io/github/last-commit/geertmeersman/qr-generator?logo=github"></a>
 </p>
 
@@ -77,4 +84,4 @@ The image is automatically rebuilt and pushed to Docker Hub whenever the upstrea
 
 ---
 
-© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](LICENSE)
+© 2026 [Geert Meersman](https://github.com/geertmeersman) — Licensed under the [MIT License](LICENSE) — [Releases](https://github.com/geertmeersman/qr-generator/releases)
