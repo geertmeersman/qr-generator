@@ -9,6 +9,13 @@ from flask_babel import Babel, gettext as _
 app = Flask(__name__)
 app.secret_key = "qr-secret-key"
 
+try:
+    _version = Path("VERSION").read_text().strip()
+except OSError:
+    _version = "dev"
+
+print(f" * QR Generator {_version}")
+
 SUPPORTED_LANGS = ["nl", "en", "fr", "de"]
 
 def get_locale():
