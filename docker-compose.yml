@@ -2,6 +2,8 @@ services:
   qr-web:
     build: .
     container_name: qr-web
+    volumes:
+      - qr-data:/app/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
@@ -14,3 +16,6 @@ services:
 networks:
   websites:
     external: true
+
+volumes:
+  qr-data:

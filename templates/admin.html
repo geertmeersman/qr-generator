@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ _("Admin") }} — {{ _("QR Generator") }}</title>
+  <link rel="icon" href="/static/favicon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white px-4 py-12">
+  <div class="w-full max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">{{ _("vCard admin") }}</h1>
+      <div class="flex gap-3">
+        <a href="/" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm transition-colors">← {{ _("Back") }}</a>
+        <a href="/admin/logout" class="px-4 py-2 bg-red-700 hover:bg-red-600 rounded-lg text-sm transition-colors">{{ _("Logout") }}</a>
+      </div>
+    </div>
+
+    {% if vcards %}
+    <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-700 text-slate-300">
+          <tr>
+            <th class="px-4 py-3 text-left">{{ _("Name") }}</th>
+            <th class="px-4 py-3 text-left">{{ _("Created") }}</th>
+            <th class="px-4 py-3 text-left">{{ _("Link") }}</th>
+            <th class="px-4 py-3 text-left">QR</th>
+            <th class="px-4 py-3 text-left"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700">
+          {% for vc in vcards %}
+          <tr class="hover:bg-slate-700/50">
+            <td class="px-4 py-3 font-medium">
+              {% if vc.foto_b64 %}
+              <img src="data:image/jpeg;base64,{{ vc.foto_b64 }}" class="w-8 h-8 rounded-full object-cover inline mr-2 border border-slate-600">
+              {% endif %}
+              {{ vc.naam }}
+            </td>
+            <td class="px-4 py-3 text-slate-400">{{ vc.aangemaakt_op[:16] }}</td>
+            <td class="px-4 py-3">
+              <a href="/vcard/{{ vc.id }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 truncate max-w-xs block">/vcard/{{ vc.id[:8] }}…</a>
+            </td>
+            <td class="px-4 py-3">
+              <img src="data:image/png;base64,{{ vc.qr }}" class="w-16 h-16">
+            </td>
+            <td class="px-4 py-3">
+              <form method="POST" action="/admin/delete/{{ vc.id }}" onsubmit="return confirm('{{ _('Delete?') }}')">
+                <button type="submit" class="px-3 py-1 bg-red-700 hover:bg-red-600 rounded-lg text-xs transition-colors">{{ _("Delete") }}</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-slate-400 text-center mt-12">{{ _("No vCards yet.") }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>

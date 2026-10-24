@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ _("Admin") }} — {{ _("QR Generator") }}</title>
+  <link rel="icon" href="/static/favicon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white flex items-center justify-center px-4">
+  <div class="w-full max-w-sm bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-700">
+    <h1 class="text-2xl font-bold text-center mb-6">{{ _("Admin login") }}</h1>
+    {% if error %}
+    <p class="text-red-400 text-sm text-center mb-4">{{ error }}</p>
+    {% endif %}
+    <form method="POST" class="space-y-4">
+      <div>
+        <label class="block text-sm text-slate-400 mb-1">{{ _("Username") }}</label>
+        <input name="username" type="text" required autofocus
+          class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <div>
+        <label class="block text-sm text-slate-400 mb-1">{{ _("Password") }}</label>
+        <input name="password" type="password" required
+          class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </div>
+      <button type="submit"
+        class="w-full bg-indigo-600 hover:bg-indigo-500 transition-colors rounded-xl py-2 font-semibold">
+        {{ _("Login") }}
+      </button>
+    </form>
+  </div>
+</body>
+</html>
