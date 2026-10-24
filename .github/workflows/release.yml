@@ -13,53 +13,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 🔢 Calculate next semantic version
-        id: semver
-        uses: ietf-tools/semver-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          patchAll: true
-          fallbackTag: v0.0.0
-          noVersionBumpBehavior: patch
-
-      - name: 🧾 Display version info
-        run: |
-          echo "Current version: ${{ steps.semver.outputs.current }}"
-          echo "Next version: ${{ steps.semver.outputs.next }}"
-
       - name: 🗑 Delete drafts
         uses: hugo19941994/delete-draft-releases@v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🚮 Remove pre-releases
-        run: |
-          gh release list --json tagName,isPrerelease -q '.[] | select(.isPrerelease == true) | .tagName' | while read -r tag_name; do
-            gh release delete "$tag_name" --yes
-            git push origin --delete "$tag_name" || true
-            git tag -d "$tag_name" || true
-          done
+      - name: 📝 Draft release
+        uses: release-drafter/release-drafter@v7
+        id: draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          publish: false
 
-      - name: Update VERSION file
-        run: echo "${{ steps.semver.outputs.next }}" > VERSION
+      - name: 🧾 Display version info
+        run: echo "Next version: ${{ steps.draft.outputs.tag_name }}"
+
+      - name: Write VERSION file
+        run: echo "${{ steps.draft.outputs.tag_name }}" > VERSION
 
       - name: Commit VERSION file
         uses: EndBug/add-and-commit@v9
         with:
-          message: "chore: bump version to ${{ steps.semver.outputs.next }}"
-
-      - name: Publish release
-        uses: release-drafter/release-drafter@v7
-        id: release_published
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          publish: true
-          tag: ${{ steps.semver.outputs.next }}
-          name: ${{ steps.semver.outputs.next }}
+          message: "chore: bump version to ${{ steps.draft.outputs.tag_name }}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -76,11 +52,21 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
+          context: .
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             geertmeersman/qr-generator:latest
-            geertmeersman/qr-generator:${{ steps.semver.outputs.next }}
+            geertmeersman/qr-generator:${{ steps.draft.outputs.tag_name }}
+
+      - name: 🚀 Publish release
+        uses: release-drafter/release-drafter@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          publish: true
+          tag: ${{ steps.draft.outputs.tag_name }}
+          name: ${{ steps.draft.outputs.tag_name }}
 
       - name: Update Docker Hub description
         run: |
