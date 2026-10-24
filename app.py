@@ -119,6 +119,11 @@ def generate():
                 f"EMAIL:{data.get('email', '')}",
                 f"URL:{data.get('url', '')}",
             ]
+            if data.get("bedrijf"):
+                lines.append(f"ORG:{data['bedrijf']}")
+            if any(data.get(f) for f in ["straat", "stad", "postcode", "land"]):
+                lines.append(f"ADR:;;{data.get('straat','')};{data.get('stad','')};;"
+                             f"{data.get('postcode','')};{data.get('land','')}")
             if photo_b64:
                 lines.append(f"PHOTO;ENCODING=b;TYPE=JPEG:{photo_b64}")
             lines.append("END:VCARD")

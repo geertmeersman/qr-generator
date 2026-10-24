@@ -56,7 +56,7 @@ Flask-based QR code generator with multi-language support, based on `python:3.13
 
 ```bash
 docker pull geertmeersman/qr-generator:latest
-docker run -p 5000:5000 geertmeersman/qr-generator:latest
+docker run -p 5000:5000 -v qr-data:/app/data geertmeersman/qr-generator:latest
 ```
 
 Or with Docker Compose:
@@ -68,15 +68,33 @@ services:
     container_name: qr-web
     ports:
       - "5000:5000"
+    volumes:
+      - qr-data:/app/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 30s
       timeout: 5s
       retries: 3
     restart: unless-stopped
+
+volumes:
+  qr-data:
 ```
 
 Open `http://localhost:5000` in your browser.
+
+## vCard hosting
+
+When generating a vCard QR code, the contact is stored server-side and the QR code links to a hosted vCard page. This allows embedding a profile photo without size limitations.
+
+| Path | Description |
+|------|-------------|
+| `/vcard/<id>` | Public vCard page with download button |
+| `/vcard/<id>/download` | Direct `.vcf` download |
+| `/admin` | Admin dashboard (login required) |
+| `/admin/setup` | First-time admin account setup |
+
+> **Note:** Mount the `/app/data` volume to persist vCards and the admin database across container restarts.
 
 ## Auto-updates
 
