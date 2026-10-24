@@ -83,9 +83,13 @@ jobs:
             geertmeersman/qr-generator:${{ steps.semver.outputs.next }}
 
       - name: Update Docker Hub description
-        uses: peter-evans/dockerhub-description@v4
+        run: |
+          VERSION=$(grep "^# python:3.13-slim" Dockerfile | awk '{print $3}')
+          sed "s|PYTHON_VERSION_PLACEHOLDER|${VERSION}|" DOCKERHUB.md > DOCKERHUB.tmp.md
+
+      - uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: geertmeersman/qr-generator
-          readme-filepath: ./DOCKERHUB.md
+          readme-filepath: ./DOCKERHUB.tmp.md
