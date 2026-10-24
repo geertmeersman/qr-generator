@@ -146,6 +146,13 @@
             <input id="vcard-url" type="url" placeholder="https://example.com"
               class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Photo") }} ({{ _("optional") }})</label>
+            <input id="vcard-photo" type="file" accept="image/*"
+              onchange="previewVcardPhoto(this)"
+              class="w-full text-sm text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:cursor-pointer" />
+            <img id="vcard-photo-preview" src="" alt="" class="hidden mt-2 w-16 h-16 rounded-full object-cover border-2 border-slate-600" />
+          </div>
         </div>
       </div>
 
@@ -216,7 +223,7 @@
       if (activeTab === 'url')   return { type: 'url',   url: document.getElementById('url-url').value };
       if (activeTab === 'sepa')  return { type: 'sepa',  naam: document.getElementById('sepa-naam').value, iban: document.getElementById('sepa-iban').value, bedrag: document.getElementById('sepa-bedrag').value, bic: document.getElementById('sepa-bic').value, mededeling: document.getElementById('sepa-mededeling').value };
       if (activeTab === 'wifi')  return { type: 'wifi',  ssid: document.getElementById('wifi-ssid').value, password: document.getElementById('wifi-password').value, security: document.getElementById('wifi-security').value, hidden: document.getElementById('wifi-hidden').checked };
-      if (activeTab === 'vcard') return { type: 'vcard', naam: document.getElementById('vcard-naam').value, tel: document.getElementById('vcard-tel').value, email: document.getElementById('vcard-email').value, url: document.getElementById('vcard-url').value };
+      if (activeTab === 'vcard') return { type: 'vcard', naam: document.getElementById('vcard-naam').value, tel: document.getElementById('vcard-tel').value, email: document.getElementById('vcard-email').value, url: document.getElementById('vcard-url').value, photo: document.getElementById('vcard-photo').dataset.b64 || '' };
       if (activeTab === 'text')  return { type: 'text',  text: document.getElementById('text-text').value };
     }
 
@@ -241,6 +248,20 @@
       const res = await fetch(img.src);
       const blob = await res.blob();
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    }
+
+    function previewVcardPhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const b64 = e.target.result.split(',')[1];
+        input.dataset.b64 = b64;
+        const preview = document.getElementById('vcard-photo-preview');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
     }
   </script>
 </body>

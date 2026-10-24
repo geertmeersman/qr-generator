@@ -93,14 +93,17 @@ def generate():
             payload = f"WIFI:T:{security};S:{ssid};P:{password};H:{hidden};;"
 
         elif qr_type == "vcard":
-            payload = "\n".join([
+            lines = [
                 "BEGIN:VCARD", "VERSION:3.0",
                 f"FN:{data.get('naam', '')}",
                 f"TEL:{data.get('tel', '')}",
                 f"EMAIL:{data.get('email', '')}",
                 f"URL:{data.get('url', '')}",
-                "END:VCARD"
-            ])
+            ]
+            if data.get("photo"):
+                lines.append(f"PHOTO;ENCODING=b;TYPE=JPEG:{data['photo']}")
+            lines.append("END:VCARD")
+            payload = "\n".join(lines)
 
         elif qr_type == "text":
             payload = data["text"]
