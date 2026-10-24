@@ -2,7 +2,7 @@ from datetime import datetime
 import io
 import base64
 import uuid
-import hashlib
+import bcrypt
 from pathlib import Path
 import qrcode
 from flask import Flask, render_template, request, jsonify, redirect, make_response, session, Response, url_for
@@ -42,7 +42,11 @@ def inject_globals():
 
 
 def hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode()).hexdigest()
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+
+def check_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed.encode())
 
 
 def is_logged_in():
@@ -189,10 +193,10 @@ def admin_login():
         password = request.form["password"]
         with get_db() as conn:
             user = conn.execute(
-                "SELECT * FROM users WHERE username = ? AND password_hash = ?",
-                (username, hash_password(password))
+                "SELECT * FROM users WHERE username = ?",
+                (username,)
             ).fetchone()
-        if user:
+        if user and check_password(password, user["password_hash"]):
             session["admin_logged_in"] = True
             session["admin_username"] = username
             return redirect("/admin")
