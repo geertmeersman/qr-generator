@@ -46,6 +46,11 @@ jobs:
       - name: Update VERSION file
         run: echo "${{ steps.semver.outputs.next }}" > VERSION
 
+      - name: Commit VERSION file
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "chore: bump version to ${{ steps.semver.outputs.next }}"
+
       - name: Publish release
         uses: release-drafter/release-drafter@v7
         id: release_published
@@ -55,11 +60,6 @@ jobs:
           publish: true
           tag: ${{ steps.semver.outputs.next }}
           name: ${{ steps.semver.outputs.next }}
-
-      - name: Commit VERSION file
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "chore: bump version to ${{ steps.semver.outputs.next }}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -84,8 +84,8 @@ jobs:
 
       - name: Update Docker Hub description
         run: |
-          VERSION=$(grep "^# python:3.13-slim" Dockerfile | awk '{print $3}')
-          sed "s|PYTHON_VERSION_PLACEHOLDER|${VERSION}|" DOCKERHUB.md > DOCKERHUB.tmp.md
+          PYVERSION=$(grep "^# python:3.13-slim" Dockerfile | awk '{print $3}')
+          sed "s|PYTHON_VERSION_PLACEHOLDER|${PYVERSION}|" DOCKERHUB.md > DOCKERHUB.tmp.md
 
       - uses: peter-evans/dockerhub-description@v4
         with:
