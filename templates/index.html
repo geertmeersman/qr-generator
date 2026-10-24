@@ -12,7 +12,7 @@
 
     <!-- Language switcher -->
     <div class="flex justify-end mb-6">
-      <select onchange="const allowed=['nl','en','fr','de']; const v=this.value; if(allowed.includes(v)) window.location='/lang/'+v;"
+      <select onchange="const routes={nl:'/lang/nl',en:'/lang/en',fr:'/lang/fr',de:'/lang/de'}; const v=this.value; const dest=routes[v]; if(dest) window.location.assign(dest);"
         class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
         {% for code, flag, label in [("nl","🇧🇪","Nederlands"), ("en","🇬🇧","English"), ("fr","🇫🇷","Français"), ("de","🇩🇪","Deutsch")] %}
         <option value="{{ code }}" {% if get_locale() == code %}selected{% endif %}>{{ flag }} {{ label }}</option>
