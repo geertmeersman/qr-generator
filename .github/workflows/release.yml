@@ -27,7 +27,7 @@ jobs:
           publish: false
 
       - name: Display version info
-        run: echo "Next version: ${{ steps.draft.outputs.tag_name }}"
+        run: echo 'Next version: ${{ steps.draft.outputs.tag_name }}'
 
       - name: Write VERSION file
         run: echo "${{ steps.draft.outputs.tag_name }}" > VERSION
