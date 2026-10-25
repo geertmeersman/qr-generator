@@ -13,9 +13,19 @@
   <img src="https://img.shields.io/docker/v/geertmeersman/qr-generator?label=docker%20image%20version">
 </p>
 
-![screenshot](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-url.png)
 
 Flask-based QR code generator with multi-language support (nl, en, fr, de).
+
+## Screenshots
+
+| URL | SEPA | WiFi |
+|-----|------|------|
+| ![URL](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-url.png) | ![SEPA](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-sepa.png) | ![WiFi](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-wifi.png) |
+
+| vCard | Text | Admin |
+|-------|------|-------|
+| ![vCard](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-vcard.png) | ![Text](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-text.png) | ![Admin](https://raw.githubusercontent.com/geertmeersman/qr-generator/main/images/screenshot-admin.png) |
 
 ## Current versions
 
@@ -25,11 +35,13 @@ Flask-based QR code generator with multi-language support (nl, en, fr, de).
 
 ## Supported QR types
 
-- **URL** — Any web URL
-- **SEPA** — European bank transfer (BCD format)
-- **WiFi** — WiFi network credentials
-- **vCard** — Contact card (v3.0)
-- **Text** — Plain text
+| Type | Fields |
+|------|--------|
+| URL | URL |
+| SEPA | Recipient name, IBAN, Amount, BIC, Message |
+| WiFi | SSID, Password, Security, Hidden |
+| vCard | Name, Company, Job title, Phone, Email, Website, Street, City, Postal code, Country, Photo |
+| Text | Free text |
 
 ## Usage
 

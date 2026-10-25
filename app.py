@@ -121,6 +121,8 @@ def generate():
             ]
             if data.get("bedrijf"):
                 lines.append(f"ORG:{data['bedrijf']}")
+            if data.get("functie"):
+                lines.append(f"TITLE:{data['functie']}")
             if any(data.get(f) for f in ["straat", "stad", "postcode", "land"]):
                 lines.append(f"ADR:;;{data.get('straat','')};{data.get('stad','')};;"
                              f"{data.get('postcode','')};{data.get('land','')}")

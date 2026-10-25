@@ -80,3 +80,87 @@ msgstr "Copy"
 
 msgid "Show payload"
 msgstr "Show payload"
+
+msgid "Company"
+msgstr "Company"
+
+msgid "Acme Corp"
+msgstr "Acme Corp"
+
+msgid "Job title"
+msgstr "Job title"
+
+msgid "CEO"
+msgstr "CEO"
+
+msgid "Street"
+msgstr "Street"
+
+msgid "Main Street 1"
+msgstr "Main Street 1"
+
+msgid "City"
+msgstr "City"
+
+msgid "Brussels"
+msgstr "Brussels"
+
+msgid "Postal code"
+msgstr "Postal code"
+
+msgid "Country"
+msgstr "Country"
+
+msgid "Photo"
+msgstr "Photo"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Admin login"
+msgstr "Admin login"
+
+msgid "Admin setup"
+msgstr "Admin setup"
+
+msgid "Create the first admin account"
+msgstr "Create the first admin account"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Create admin"
+msgstr "Create admin"
+
+msgid "Invalid credentials"
+msgstr "Invalid credentials"
+
+msgid "Fill in all fields"
+msgstr "Fill in all fields"
+
+msgid "vCard admin"
+msgstr "vCard admin"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Created"
+msgstr "Created"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete?"
+msgstr "Delete?"
+
+msgid "No vCards yet."
+msgstr "No vCards yet."
+
+msgid "Save contact"
+msgstr "Save contact"

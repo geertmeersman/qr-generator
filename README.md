@@ -29,7 +29,15 @@
 
 Flask-based QR code generator with multi-language support, based on `python:3.13-slim`.
 
-![screenshot](images/screenshot.png)
+## Screenshots
+
+| URL | SEPA | WiFi |
+|-----|------|------|
+| ![URL](images/screenshot-url.png) | ![SEPA](images/screenshot-sepa.png) | ![WiFi](images/screenshot-wifi.png) |
+
+| vCard | Text | Admin |
+|-------|------|-------|
+| ![vCard](images/screenshot-vcard.png) | ![Text](images/screenshot-text.png) | ![Admin](images/screenshot-admin.png) |
 
 ## Current versions
 
@@ -44,13 +52,13 @@ Flask-based QR code generator with multi-language support, based on `python:3.13
 
 ## Supported QR types
 
-| Type | Description |
-|------|-------------|
-| URL | Any web URL |
-| SEPA | European bank transfer (BCD format) |
-| WiFi | WiFi network credentials |
-| vCard | Contact card (v3.0) |
-| Text | Plain text |
+| Type | Fields |
+|------|--------|
+| URL | URL |
+| SEPA | Recipient name, IBAN, Amount, BIC, Message |
+| WiFi | SSID, Password, Security, Hidden |
+| vCard | Name, Company, Job title, Phone, Email, Website, Street, City, Postal code, Country, Photo |
+| Text | Free text |
 
 ## Usage
 

@@ -80,3 +80,87 @@ msgstr "Kopiëren"
 
 msgid "Show payload"
 msgstr "Toon inhoud"
+
+msgid "Company"
+msgstr "Bedrijf"
+
+msgid "Acme Corp"
+msgstr "Acme Corp"
+
+msgid "Job title"
+msgstr "Functie"
+
+msgid "CEO"
+msgstr "CEO"
+
+msgid "Street"
+msgstr "Straat"
+
+msgid "Main Street 1"
+msgstr "Hoofdstraat 1"
+
+msgid "City"
+msgstr "Stad"
+
+msgid "Brussels"
+msgstr "Brussel"
+
+msgid "Postal code"
+msgstr "Postcode"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Admin"
+msgstr "Beheer"
+
+msgid "Admin login"
+msgstr "Beheerderslogin"
+
+msgid "Admin setup"
+msgstr "Beheerdersinstellingen"
+
+msgid "Create the first admin account"
+msgstr "Maak het eerste beheerdersaccount aan"
+
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgid "Login"
+msgstr "Aanmelden"
+
+msgid "Create admin"
+msgstr "Beheerder aanmaken"
+
+msgid "Invalid credentials"
+msgstr "Ongeldige inloggegevens"
+
+msgid "Fill in all fields"
+msgstr "Vul alle velden in"
+
+msgid "vCard admin"
+msgstr "vCard beheer"
+
+msgid "Back"
+msgstr "Terug"
+
+msgid "Logout"
+msgstr "Afmelden"
+
+msgid "Created"
+msgstr "Aangemaakt"
+
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgid "Delete?"
+msgstr "Verwijderen?"
+
+msgid "No vCards yet."
+msgstr "Nog geen vCards."
+
+msgid "Save contact"
+msgstr "Contact opslaan"

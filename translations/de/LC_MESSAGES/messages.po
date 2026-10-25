@@ -80,3 +80,87 @@ msgstr "Kopieren"
 
 msgid "Show payload"
 msgstr "Inhalt anzeigen"
+
+msgid "Company"
+msgstr "Unternehmen"
+
+msgid "Acme Corp"
+msgstr "Acme GmbH"
+
+msgid "Job title"
+msgstr "Berufsbezeichnung"
+
+msgid "CEO"
+msgstr "Geschäftsführer"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Main Street 1"
+msgstr "Hauptstraße 1"
+
+msgid "City"
+msgstr "Stadt"
+
+msgid "Brussels"
+msgstr "Brüssel"
+
+msgid "Postal code"
+msgstr "Postleitzahl"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Admin login"
+msgstr "Admin-Anmeldung"
+
+msgid "Admin setup"
+msgstr "Admin-Einrichtung"
+
+msgid "Create the first admin account"
+msgstr "Erstes Administratorkonto erstellen"
+
+msgid "Username"
+msgstr "Benutzername"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Create admin"
+msgstr "Administrator erstellen"
+
+msgid "Invalid credentials"
+msgstr "Ungültige Anmeldedaten"
+
+msgid "Fill in all fields"
+msgstr "Alle Felder ausfüllen"
+
+msgid "vCard admin"
+msgstr "vCard-Verwaltung"
+
+msgid "Back"
+msgstr "Zurück"
+
+msgid "Logout"
+msgstr "Abmelden"
+
+msgid "Created"
+msgstr "Erstellt"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete?"
+msgstr "Löschen?"
+
+msgid "No vCards yet."
+msgstr "Noch keine vCards."
+
+msgid "Save contact"
+msgstr "Kontakt speichern"
