@@ -280,6 +280,28 @@
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     }
 
+    function loadFromParams() {
+      const p = new URLSearchParams(window.location.search);
+      const tab = p.get('tab');
+      const fill = {
+        url:   [['url-url', 'url']],
+        sepa:  [['sepa-naam', 'naam'], ['sepa-iban', 'iban'], ['sepa-bedrag', 'bedrag'], ['sepa-bic', 'bic'], ['sepa-mededeling', 'mededeling']],
+        wifi:  [['wifi-ssid', 'ssid'], ['wifi-password', 'password'], ['wifi-security', 'security']],
+        vcard: [['vcard-naam', 'naam'], ['vcard-bedrijf', 'bedrijf'], ['vcard-functie', 'functie'], ['vcard-tel', 'tel'], ['vcard-email', 'email'], ['vcard-url', 'url'], ['vcard-straat', 'straat'], ['vcard-stad', 'stad'], ['vcard-postcode', 'postcode'], ['vcard-land', 'land']],
+        text:  [['text-text', 'text']],
+      };
+      if (tab && fill[tab]) {
+        switchTab(tab);
+        fill[tab].forEach(([id, key]) => {
+          const val = p.get(key);
+          if (val) document.getElementById(id).value = val;
+        });
+        if (p.get('wifi-hidden') === '1') document.getElementById('wifi-hidden').checked = true;
+      }
+    }
+
+    loadFromParams();
+
     function previewVcardPhoto(input) {
       const file = input.files[0];
       if (!file) return;

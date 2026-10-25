@@ -91,6 +91,18 @@ volumes:
 
 Open `http://localhost:5000` in your browser.
 
+## Deep links
+
+Pre-fill any form via URL parameters:
+
+| Example | Description |
+|---------|-------------|
+| `/?tab=url&url=https://example.com` | Open URL tab with prefilled URL |
+| `/?tab=sepa&naam=Jan&iban=BE86...&bedrag=10.00` | Open SEPA tab prefilled |
+| `/?tab=wifi&ssid=MyWifi&password=secret&security=WPA` | Open WiFi tab prefilled |
+| `/?tab=vcard&naam=Jan&tel=%2B32499...&email=jan@example.com` | Open vCard tab prefilled |
+| `/?tab=text&text=Hello` | Open Text tab prefilled |
+
 ## vCard hosting
 
 When generating a vCard QR code, the contact is stored server-side and the QR code links to a hosted vCard page. This allows embedding a profile photo without size limitations.
