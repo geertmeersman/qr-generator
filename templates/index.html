@@ -131,6 +131,16 @@
             <input id="vcard-naam" type="text" placeholder="{{ _('Jan Janssen') }}"
               class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Company") }} ({{ _("optional") }})</label>
+            <input id="vcard-bedrijf" type="text" placeholder="{{ _('Acme Corp') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Job title") }} ({{ _("optional") }})</label>
+            <input id="vcard-functie" type="text" placeholder="{{ _('CEO') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
           <div>
             <label class="block text-sm text-slate-400 mb-1">{{ _("Phone") }}</label>
             <input id="vcard-tel" type="tel" placeholder="+32 499 00 00 00"
@@ -144,6 +154,26 @@
           <div class="col-span-2">
             <label class="block text-sm text-slate-400 mb-1">{{ _("Website") }}</label>
             <input id="vcard-url" type="url" placeholder="https://example.com"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Street") }} ({{ _("optional") }})</label>
+            <input id="vcard-straat" type="text" placeholder="{{ _('Main Street 1') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("City") }} ({{ _("optional") }})</label>
+            <input id="vcard-stad" type="text" placeholder="{{ _('Brussels') }}"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Postal code") }} ({{ _("optional") }})</label>
+            <input id="vcard-postcode" type="text" placeholder="1000"
+              class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-400 mb-1">{{ _("Country") }} ({{ _("optional") }})</label>
+            <input id="vcard-land" type="text" placeholder="Belgium"
               class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
           <div class="col-span-2">
@@ -223,7 +253,7 @@
       if (activeTab === 'url')   return { type: 'url',   url: document.getElementById('url-url').value };
       if (activeTab === 'sepa')  return { type: 'sepa',  naam: document.getElementById('sepa-naam').value, iban: document.getElementById('sepa-iban').value, bedrag: document.getElementById('sepa-bedrag').value, bic: document.getElementById('sepa-bic').value, mededeling: document.getElementById('sepa-mededeling').value };
       if (activeTab === 'wifi')  return { type: 'wifi',  ssid: document.getElementById('wifi-ssid').value, password: document.getElementById('wifi-password').value, security: document.getElementById('wifi-security').value, hidden: document.getElementById('wifi-hidden').checked };
-      if (activeTab === 'vcard') return { type: 'vcard', naam: document.getElementById('vcard-naam').value, tel: document.getElementById('vcard-tel').value, email: document.getElementById('vcard-email').value, url: document.getElementById('vcard-url').value, photo: document.getElementById('vcard-photo').dataset.b64 || '' };
+      if (activeTab === 'vcard') return { type: 'vcard', naam: document.getElementById('vcard-naam').value, bedrijf: document.getElementById('vcard-bedrijf').value, functie: document.getElementById('vcard-functie').value, tel: document.getElementById('vcard-tel').value, email: document.getElementById('vcard-email').value, url: document.getElementById('vcard-url').value, straat: document.getElementById('vcard-straat').value, stad: document.getElementById('vcard-stad').value, postcode: document.getElementById('vcard-postcode').value, land: document.getElementById('vcard-land').value, photo: document.getElementById('vcard-photo').dataset.b64 || '' };
       if (activeTab === 'text')  return { type: 'text',  text: document.getElementById('text-text').value };
     }
 
