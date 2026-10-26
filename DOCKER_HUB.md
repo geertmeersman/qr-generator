@@ -73,6 +73,24 @@ volumes:
 
 Open `http://localhost:5000` in your browser.
 
+## Deep links
+
+You can pre-fill the form via URL parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tab` | `url` \| `sepa` \| `wifi` \| `vcard` \| `text` | Opens the specified tab |
+
+**URL:** `?tab=url&url=https://example.com`
+
+**SEPA:** `?tab=sepa&naam=Jan%20Janssen&iban=BE00000000000000&bedrag=10.00&bic=GEBABEBB&mededeling=Invoice%202026-001`
+
+**WiFi:** `?tab=wifi&ssid=MyNetwork&password=secret&security=WPA&hidden=0`
+
+**vCard:** `?tab=vcard&naam=Jan%20Janssen&bedrijf=Acme&functie=CEO&tel=%2B32499000000&email=jan@example.com&url=https://example.com&straat=Hoofdstraat%201&stad=Brussel&postcode=1000&land=Belgium`
+
+**Text:** `?tab=text&text=Hello%20World`
+
 ## vCard hosting
 
 | Path | Description |
