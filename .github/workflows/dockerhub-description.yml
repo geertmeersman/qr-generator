@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - DOCKERHUB.md
+      - DOCKER_HUB.md
   workflow_dispatch:
 
 concurrency:
@@ -24,7 +24,7 @@ jobs:
       - name: Fill version placeholder
         run: |
           VERSION=$(grep "^# python:3.13-slim" Dockerfile | awk '{print $3}')
-          sed "s|PYTHON_VERSION_PLACEHOLDER|${VERSION}|" DOCKERHUB.md > DOCKERHUB.tmp.md
+          sed "s|PYTHON_VERSION_PLACEHOLDER|${VERSION}|" DOCKER_HUB.md > DOCKER_HUB.tmp.md
 
       - name: Update Docker Hub description
         uses: peter-evans/dockerhub-description@v4
@@ -32,5 +32,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: geertmeersman/qr-generator
-          readme-filepath: ./DOCKERHUB.tmp.md
+          readme-filepath: ./DOCKER_HUB.tmp.md
           enable-url-completion: true
