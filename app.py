@@ -57,7 +57,8 @@ def is_logged_in():
 def set_lang(lang):
     resp = make_response(redirect(request.referrer or "/"))
     if lang in SUPPORTED_LANGS:
-        resp.set_cookie("lang", lang, max_age=60*60*24*365)
+        safe_lang = SUPPORTED_LANGS[SUPPORTED_LANGS.index(lang)]
+        resp.set_cookie("lang", safe_lang, max_age=60*60*24*365)
     return resp
 
 
