@@ -43,7 +43,7 @@ Flask-based QR code generator with multi-language support, based on `python:3.13
 
 | Component | Version |
 |-----------|---------|
-| Python | 3.13 |
+| Python | 3.13.17-slim |
 
 ## What's inside
 
