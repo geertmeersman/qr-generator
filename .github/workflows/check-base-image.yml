@@ -64,7 +64,7 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:${BRANCH}&state=open" \
             | jq 'length')
           if [[ "${EXISTING}" == "0" ]]; then
-            curl -s -X POST \
+            PR_RESPONSE=$(curl -s -X POST \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/${{ github.repository }}/pulls" \
@@ -73,5 +73,11 @@ jobs:
                 \"body\": \"Automated base image update.\n\n- New digest: \`${{ steps.upstream.outputs.digest }}\`\n- New version: \`${{ steps.upstream.outputs.version }}\`\",
                 \"head\": \"${BRANCH}\",
                 \"base\": \"main\"
-              }"
+              }")
+            PR_NODE_ID=$(echo "${PR_RESPONSE}" | jq -r '.node_id')
+            curl -s -X POST \
+              -H "Authorization: bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d "{\"query\": \"mutation { enablePullRequestAutoMerge(input: { pullRequestId: \\\"${PR_NODE_ID}\\\", mergeMethod: SQUASH }) { pullRequest { autoMergeRequest { enabledAt } } } }\"}" \
+              "https://api.github.com/graphql"
           fi
