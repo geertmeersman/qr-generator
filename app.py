@@ -55,7 +55,10 @@ def is_logged_in():
 
 @app.route("/lang/<lang>")
 def set_lang(lang):
-    resp = make_response(redirect(request.referrer or "/"))
+    referrer = request.referrer or "/"
+    if not referrer.startswith((request.host_url, "/")):
+        referrer = "/"
+    resp = make_response(redirect(referrer))
     if lang in SUPPORTED_LANGS:
         safe_lang = SUPPORTED_LANGS[SUPPORTED_LANGS.index(lang)]
         resp.set_cookie("lang", safe_lang, max_age=60*60*24*365)
