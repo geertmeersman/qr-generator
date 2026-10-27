@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 🗑 Delete drafts
         uses: hugo19941994/delete-draft-releases@v3.0.0
@@ -34,6 +36,8 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           message: "chore: bump version to ${{ steps.draft.outputs.tag_name }}"
+          pull_strategy: rebase
+          push_attempts: 3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
