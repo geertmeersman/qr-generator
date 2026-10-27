@@ -21,6 +21,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 🏷️ Delete existing tag if present
+        run: git push origin --delete "${{ steps.draft.outputs.tag_name }}" || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: 📝 Draft release
         uses: release-drafter/release-drafter@v7
         id: draft
