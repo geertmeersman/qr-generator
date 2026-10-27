@@ -56,7 +56,9 @@ def is_logged_in():
 @app.route("/lang/<lang>")
 def set_lang(lang):
     referrer = request.referrer or "/"
-    if not referrer.startswith((request.host_url, "/")):
+    from urllib.parse import urlparse
+    parsed = urlparse(referrer)
+    if parsed.netloc and parsed.netloc != urlparse(request.host_url).netloc:
         referrer = "/"
     resp = make_response(redirect(referrer))
     if lang in SUPPORTED_LANGS:
