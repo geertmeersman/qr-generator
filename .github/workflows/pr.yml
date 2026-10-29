@@ -1,11 +1,11 @@
-name: PR Labeler 🏷️
+name: PR 🏷️
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, edited, synchronize, reopened]
 
 concurrency:
-  group: pr-labeler-${{ github.ref }}
+  group: pr-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Apply labels based on commit types
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { data: commits } = await github.rest.pulls.listCommits({
@@ -66,8 +66,8 @@ jobs:
             }
 
       - name: Assign PR to author
-        if: github.event.action == 'opened'
-        uses: actions/github-script@v7
+        if: github.event.action == 'opened' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]'
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.addAssignees({
@@ -76,3 +76,18 @@ jobs:
               issue_number: context.issue.number,
               assignees: [context.payload.pull_request.user.login],
             });
+
+  validate:
+    name: Lint & build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          config: .hadolint.yaml
+
+      - name: Build image
+        run: docker build -t qr-generator:pr-${{ github.event.pull_request.number }} .
