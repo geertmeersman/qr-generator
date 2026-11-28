@@ -1,5 +1,5 @@
 # python:3.13-slim 3.13.18-slim
-FROM python:3.13-slim@sha256:ae14d4ce8771606477a81446e7ef429edd6762305fc50c84507c1041fa8285d1
+FROM python:3.13-slim@sha256:168d3a5d10f2152f8e8d77b6843ac82c22a846cfefeef7afdf9aa630404e82a7
 
 ENV PYTHONUNBUFFERED=1
 ENV TZ=Europe/Brussels
